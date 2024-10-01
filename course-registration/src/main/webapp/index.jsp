@@ -9,7 +9,8 @@
 </head>
 <body>
 	<div>
-		<form action="#" method="post">
+		<c:url var="registerUrl" value="/register"></c:url>
+		<form action="${registerUrl}" method="post">
 			<h2>Register New Course</h2>
 			<div>
 				<label>Course ID</label>

@@ -32,7 +32,7 @@ public class CourseController extends HttpServlet {
 		if("/search".equals(path)) {
 			String teacherName = req.getParameter("teacherName");
 			
-			if(null != teacherName || !"".equals(teacherName)) {
+			if(null != teacherName && !"".equals(teacherName)) {
 				List<Course> courseList = service.searchCourseByTeacherName(teacherName);
 				req.setAttribute("courseList", courseList);
 			}
@@ -52,14 +52,12 @@ public class CourseController extends HttpServlet {
 		String courseName = req.getParameter("courseName");
 		String period = req.getParameter("period");
 		String timeStart = req.getParameter("timeStart");
-		String teacherName = req.getParameter("teacher");
+		String teacherName = req.getParameter("teacherName");
 		
 		CourseRegisterForm form = new CourseRegisterForm(courseId, courseName, Integer.parseInt(period), timeStart, teacherName);
-		boolean result = service.register(form);
-		if(result) {
-			String path = getServletContext().getContextPath().concat("/register");
-			resp.sendRedirect(path);
-		}
+		service.register(form);
+		String path = getServletContext().getContextPath().concat("/register");
+		resp.sendRedirect(path);
 	}
 
 }
