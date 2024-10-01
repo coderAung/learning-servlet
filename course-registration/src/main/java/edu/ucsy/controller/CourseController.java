@@ -1,9 +1,11 @@
 package edu.ucsy.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import edu.ucsy.dto.CourseRegisterForm;
 import edu.ucsy.model.CourseService;
+import edu.ucsy.model.entity.Course;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,8 +30,15 @@ public class CourseController extends HttpServlet {
 		String path = req.getServletPath();
 		
 		if("/search".equals(path)) {
+			String teacherName = req.getParameter("teacherName");
+			
+			if(null != teacherName || !"".equals(teacherName)) {
+				List<Course> courseList = service.searchCourseByTeacherName(teacherName);
+				req.setAttribute("courseList", courseList);
+			}
 			
 			getServletContext().getRequestDispatcher("/course-search.jsp").forward(req, resp);
+			
 		} else if("/register".equals(path)) {
 			
 			getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);

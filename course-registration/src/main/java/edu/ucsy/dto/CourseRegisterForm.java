@@ -1,5 +1,8 @@
 package edu.ucsy.dto;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import edu.ucsy.model.entity.Course;
 
 public class CourseRegisterForm {
@@ -59,7 +62,24 @@ public class CourseRegisterForm {
 	}
 	
 	public Course getCourse() {
-		return null;
+		
+		Course course = new Course();
+		
+		course.setCourseId(this.courseId);
+		course.setCourseName(this.courseName);
+		course.setPeriod(this.period);
+		course.setTeacherName(this.teacherName);
+		
+		// convert String timeStart to LocalDate
+		LocalDate timeStartAsLocalDate = LocalDate.parse(timeStart, DateTimeFormatter.ofPattern("yyyy-MM-dd")); // 2024-10-01
+		
+		// using period, calculate timeEnd
+		LocalDate timeEnd = timeStartAsLocalDate.plusMonths(period);
+		
+		course.setTimeStart(timeStartAsLocalDate);
+		course.setTimeEnd(timeEnd);
+		
+		return course;
 	}
 
 }
